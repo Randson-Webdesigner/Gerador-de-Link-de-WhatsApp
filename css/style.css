@@ -218,3 +218,25 @@ footer a:hover {
         font-size: 12px;
     }
 }
+
+@media (max-width: 768px) {
+    a.banner {
+        margin: 20px 0;  /* Reduzir a margem em telas menores */
+    }
+
+    a.banner img {
+        width: 60%;  /* Reduzir a largura da imagem em tablets e telas médias */
+        border-radius: 5px; /* Ajustar o arredondamento da borda */
+    }
+}
+
+@media (max-width: 480px) {
+    a.banner {
+        margin: 15px 0;  /* Reduzir ainda mais a margem em telas de celular */
+    }
+
+    a.banner img {
+        width: 50%;  /* Reduzir a largura da imagem ainda mais em smartphones */
+        border-radius: 3px; /* Menor arredondamento da borda em telas bem pequenas */
+    }
+}

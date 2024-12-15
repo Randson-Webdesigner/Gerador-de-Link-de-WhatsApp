@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var phoneInput = document.getElementById('whatsapp-number');
 
-    phoneInput.addEventListener('input', function() {
+    // Formatação ao digitar no campo de número do WhatsApp
+    phoneInput.addEventListener('input', function () {
         var value = phoneInput.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
         if (value.length <= 2) {
             phoneInput.value = '(' + value;
         } else if (value.length <= 7) {
@@ -13,18 +15,35 @@ document.addEventListener('DOMContentLoaded', function() {
             phoneInput.value = '(' + value.slice(0, 2) + ') ' + value.slice(2, 7) + '-' + value.slice(7, 11);
         }
     });
-});
 
-document.getElementById('generate-link').addEventListener('click', function() {
-    var number = document.getElementById('whatsapp-number').value;
-    var cleanNumber = number.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-    var message = document.getElementById('message').value;
-    var link = 'https://wa.me?phone=' + encodeURIComponent(cleanNumber) + '&text=' + encodeURIComponent(message);
-    document.getElementById('generated-link').value = link;
-});
+    // Gerar link do WhatsApp ao clicar no botão
+    document.getElementById('generate-link').addEventListener('click', function () {
+        var number = phoneInput.value;
+        var cleanNumber = number.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
 
-document.getElementById('copy-link').addEventListener('click', function() {
-    var linkInput = document.getElementById('generated-link');
-    linkInput.select();
-    document.execCommand('copy');
+        // Verifica se o número tem o tamanho mínimo necessário
+        if (cleanNumber.length < 10 || cleanNumber.length > 11) {
+            alert('Por favor, insira um número de telefone válido com DDD.');
+            return;
+        }
+
+        var message = document.getElementById('message').value;
+        var link = 'https://wa.me/+55' + encodeURIComponent(cleanNumber) + '?text=' + encodeURIComponent(message);
+
+        document.getElementById('generated-link').value = link;
+    });
+
+    // Copiar link gerado para a área de transferência
+    document.getElementById('copy-link').addEventListener('click', function () {
+        var linkInput = document.getElementById('generated-link');
+
+        if (!linkInput.value) {
+            alert('Nenhum link gerado para copiar.');
+            return;
+        }
+
+        linkInput.select();
+        document.execCommand('copy');
+        alert('Link copiado para a área de transferência!');
+    });
 });
